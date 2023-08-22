@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -8,7 +8,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './rule-container.component.html',
   styleUrls: ['./rule-container.component.scss'],
 })
-export class RuleContainerComponent {
+export class RuleContainerComponent implements OnInit {
   @Output() saveRule = new EventEmitter<any>();
   @Input() isAddRule!: boolean;
   @Input() categoryList: any[] = [];
@@ -42,6 +42,10 @@ export class RuleContainerComponent {
     { key: 'MVEL', value: 'MVEL', type: ['STRING'] },
   ];
   constructor(private formBuilder: FormBuilder) {}
+  ngOnInit(): void {
+    this.ruleForm = this.createGroup();
+    this.ruleArray = this.ruleForm.get('rules') as FormArray;
+  }
   addRow(type: any): void {
     if (type === 0) {
       this.addGroup();
