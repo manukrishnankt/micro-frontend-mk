@@ -1,1 +1,340 @@
-<p>group works!</p>
+<form [formGroup]="rule">
+  <div *ngIf="rule.get('condition')">
+    <mk-workspace-action-bar
+      [ruleForm]="rule"
+      [deleteYn]="true"
+      (addRow)="addRow($event)"
+      (deleteRow)="removeRow(-1)"
+    ></mk-workspace-action-bar>
+
+    <ul>
+      <li
+        formArrayName="rules"
+        *ngFor="let a of rule.get('rules')['controls']; let i = index"
+      >
+        <div class="treeview__level">
+          <div [formGroupName]="i" class="search-outer-box">
+            <mk-workspace-group
+              [rule]="a"
+              [gLength]="rule.get('rules')['controls'].length"
+              style="width: 100%"
+              [isSubmitted]="isSubmitted"
+              [operatorList]="operatorList"
+              [categoryList]="categoryList"
+              [parentType]="parentType"
+              [isWizardRule]="isWizardRule"
+              [lookupList]="lookupList"
+              (deleteGroup)="removeRow(i)"
+            ></mk-workspace-group>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="!rule.get('condition')" class="tree-serch-row-1">
+    <div class="form-group dropdown-dev">
+      <mat-form-field appearance="outline" floatLabel="never">
+        <mat-select
+          panelClass="drop-down-panelcls"
+          formControlName="fieldName"
+          placeholder="Select a field"
+          [matTooltip]="
+            getValCate(categoryList, rule.controls.fieldName?.value)
+          "
+          (selectionChange)="changeCategory($event, rule)"
+          [matTooltipPosition]="'above'"
+        >
+          <mat-option
+            *ngFor="
+              let category of categoryList
+                | orderBy : { property: 'fieldLabel', direction: 1 }
+            "
+            [value]="category.fieldName"
+            matTooltip="{{ category.fieldLabel }}"
+            [matTooltipPosition]="'above'"
+            >{{ category.fieldLabel }}</mat-option
+          >
+          <mat-option
+            *ngIf="isWizardRule || parentType === 'CALENDER'"
+            [value]="'Expression'"
+            matTooltip="'Expression'"
+            [matTooltipPosition]="'above'"
+            >EXPRESSION</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <div
+        *ngIf="isSubmitted && rule.controls.fieldName.errors?.required"
+        class="mandatory-txt"
+      >
+        Please choose a category
+      </div>
+    </div>
+    <div *ngIf="rule.value.fieldName" class="form-group dropdown-dev">
+      <mat-form-field appearance="outline" floatLabel="never">
+        <mat-select
+          panelClass="drop-down-panelcls"
+          formControlName="operator"
+          placeholder="Select operator"
+          [matTooltip]="getValOper(operatorList, rule.controls.operator?.value)"
+          [matTooltipPosition]="'above'"
+        >
+          <ng-container *ngFor="let operator of operatorList">
+            <mat-option
+              *ngIf="operator.type.includes(rule.value.fieldType)"
+              [value]="operator.key"
+              matTooltip="{{ operator.value }}"
+              [matTooltipPosition]="'above'"
+              >{{ operator.value }}</mat-option
+            ></ng-container
+          >
+          <mat-option
+            *ngIf="
+              parentType === 'CALENDER' &&
+              rule.controls.fieldName?.value === 'Expression'
+            "
+            [value]="'BETWEEN'"
+            matTooltip="BETWEEN"
+            [matTooltipPosition]="'above'"
+          >
+            BETWEEN
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div
+        *ngIf="isSubmitted && rule.controls.operator.errors?.required"
+        class="mandatory-txt"
+      >
+        Please choose an operator
+      </div>
+    </div>
+    <div *ngIf="rule.value.fieldName" class="form-group dropdown-dev">
+      <mat-form-field appearance="outline" floatLabel="never">
+        <mat-select
+          panelClass="drop-down-panelcls"
+          formControlName="fieldDataTypeUI"
+          placeholder="Select type,,,"
+          [matTooltip]="
+            getValTyp(valueTypes, rule.controls.fieldDataTypeUI?.value)
+          "
+          [matTooltipPosition]="'above'"
+        >
+          <mat-option
+            *ngFor="let type of valueTypes"
+            [value]="type"
+            matTooltip="{{ type }}"
+            [matTooltipPosition]="'above'"
+            >{{ type }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <div
+        *ngIf="isSubmitted && rule.controls.fieldDataTypeUI.errors?.required"
+        class="mandatory-txt"
+      >
+        Please choose a category
+      </div>
+    </div>
+
+    <div
+      *ngIf="
+        rule.value.fieldName &&
+        rule.controls.fieldDataTypeUI.value === 'TEXT' &&
+        rule.controls.fieldName?.value !== 'Expression'
+      "
+      class="form-group"
+    >
+      <input
+        formControlName="fieldValue"
+        type="text"
+        class="form-control"
+        placeholder="Enter value"
+      />
+      <div
+        *ngIf="isSubmitted && rule.controls.fieldValue.errors?.required"
+        class="mandatory-txt"
+      >
+        Please Enter a value
+      </div>
+    </div>
+
+    <div
+      *ngIf="
+        rule.value.fieldName &&
+        rule.controls.fieldDataTypeUI.value === 'TEXT' &&
+        rule.controls.fieldName?.value === 'Expression'
+      "
+      class="form-group lang-config"
+    >
+      <input
+        formControlName="fieldValue"
+        #myTextArea
+        (click)="getCaretPos(myTextArea)"
+        (keyup)="getCaretPos(myTextArea)"
+        type="text"
+        class="form-control"
+        placeholder="Enter value"
+      />
+
+      <div
+        *ngIf="showMenu && rule.controls.fieldName?.value === 'Expression'"
+        class="lookup-dots-box"
+        #menuTrigger="matMenuTrigger"
+        [matMenuTriggerFor]="menu1"
+      >
+        <img
+          src="assets/images/field-extra-dots.svg"
+          alt=""
+          class="icon-style"
+        />
+      </div>
+      <div
+        *ngIf="isSubmitted && rule.controls.fieldValue.errors?.required"
+        class="mandatory-txt"
+      >
+        Please Enter a value
+      </div>
+
+      <div>
+        <mat-menu #menu1="matMenu" [hasBackdrop]="false" class="rule-cal">
+          <div class="mat-menu-popup">
+            <h2 matDialogTitle class="hd-exp">
+              Rule Expression
+              <button
+                type="button"
+                class="tree-sub-close-button margin-right-close"
+                (click)="close()"
+                aria-label="Close"
+              >
+                <span aria-hidden="true" class="icon-modal-close"></span>
+              </button>
+            </h2>
+
+            <div class="mv-parent">
+              <div>
+                <h3 class="fields">Fields</h3>
+                <div *ngFor="let ruleField of ruleFieldListArray">
+                  <div class="list-left rule-exp-pad">
+                    <span>{{ ruleField.lookUpCdtCode }}</span>
+                    <a class="flot-r" (click)="ruleExpField($event, ruleField)">
+                      <img
+                        class="icon-style-rule clone-svg copyIcon"
+                        src="assets/images/copy-icon.svg"
+                        alt=""
+                      />
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="preValues">
+                <h3 class="fields">Predefined Values</h3>
+                <div *ngFor="let ruleValue of rulePreValueListArray">
+                  <div class="list-left rule-exp-pad">
+                    <span>{{ ruleValue.lookUpCdtCode }}</span>
+                    <a class="flot-r" (click)="ruleExpField($event, ruleValue)">
+                      <img
+                        class="icon-style-rule clone-svg copyIcon"
+                        src="assets/images/copy-icon.svg"
+                        alt=""
+                      />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-menu>
+      </div>
+    </div>
+    <div
+      *ngIf="
+        rule.value.fieldName && rule.controls.fieldDataTypeUI.value === 'DATE'
+      "
+      class="form-group"
+    >
+      <input
+        formControlName="fieldValue"
+        type="date"
+        class="form-control"
+        placeholder="Enter value"
+      />
+      <div
+        *ngIf="isSubmitted && rule.controls.fieldValue.errors?.required"
+        class="mandatory-txt"
+      >
+        Please choose a date
+      </div>
+    </div>
+
+    <div
+      *ngIf="
+        rule.value.fieldName && rule.controls.fieldDataTypeUI.value === 'LOOKUP'
+      "
+      class="form-group dropdown-dev"
+    >
+      <mat-form-field appearance="outline" floatLabel="never">
+        <mat-select
+          panelClass="drop-down-panelcls"
+          formControlName="fieldLookupCodeUI"
+          placeholder="Select lookup"
+          [(value)]="selectedLookupValue"
+          (selectionChange)="onSelectionChange()"
+        >
+          <mat-option
+            *ngFor="let type of lookupList"
+            [value]="type.lookUpCatCode"
+            matTooltip="{{ type.categoryText }}"
+            [matTooltipPosition]="'above'"
+            >{{ type.categoryText }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <div
+        *ngIf="isSubmitted && rule.controls.fieldLookupCodeUI.errors?.required"
+        class="mandatory-txt"
+      >
+        Please choose a lookup
+      </div>
+    </div>
+
+    <div
+      *ngIf="
+        rule.value.fieldName && rule.controls.fieldDataTypeUI.value === 'LOOKUP'
+      "
+      class="form-group dropdown-dev"
+    >
+      <mat-form-field appearance="outline" floatLabel="never">
+        <mat-select
+          panelClass="drop-down-panelcls"
+          formControlName="fieldValue"
+          placeholder="Select lookup value"
+        >
+          <mat-option
+            *ngFor="let type of lookupValueListArray"
+            [value]="type.lookUpCdtCode"
+            matTooltip="{{ type.lookUpCdtText }}"
+            [matTooltipPosition]="'above'"
+            >{{ type.lookUpCdtText }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <div
+        *ngIf="isSubmitted && rule.controls.fieldValue.errors?.required"
+        class="mandatory-txt"
+      >
+        Please choose a value
+      </div>
+    </div>
+    <div
+      *ngIf="
+        gLength > 1 &&
+        (rule.controls.removable ? rule.controls.removable.value : true)
+      "
+      class="tree-sub-close-button"
+      (click)="removeRow(-1)"
+    >
+      <span class="icon-modal-close"></span>
+    </div>
+  </div>
+</form>
