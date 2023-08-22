@@ -9,5 +9,6 @@ import { MaterialModule } from './shared/material.module';
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, MaterialModule],
   declarations: [RuleBuilderComponent, ActionBarComponent, GroupComponent],
+  exports: [RuleBuilderComponent],
 })
 export class RuleBuilderModule {}

@@ -45,10 +45,7 @@
           [matTooltipPosition]="'above'"
         >
           <mat-option
-            *ngFor="
-              let category of categoryList
-                | orderBy : { property: 'fieldLabel', direction: 1 }
-            "
+            *ngFor="let category of categoryList"
             [value]="category.fieldName"
             matTooltip="{{ category.fieldLabel }}"
             [matTooltipPosition]="'above'"

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -9,11 +9,38 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./rule-builder.component.scss'],
 })
 export class RuleBuilderComponent {
+  @Output() saveRule = new EventEmitter<any>();
+  @Input() isAddRule!: boolean;
+  @Input() categoryList: any[] = [];
+  @Input() isWizard: boolean = false;
+  @Input() wizardSteps: any[] = [];
+  @Input() ruleJson: any;
+  @Input() parentType: string = '';
   isSubmitted: boolean = false;
   ruleForm!: FormGroup;
   ruleObject: any = {};
   ruleArray!: FormArray;
   queryCondition = 'AND';
+  lookupList: any[] = [];
+  operatorList: any[] = [
+    { key: 'EQUALS', value: 'EQUALS', type: ['STRING', 'NUMBER'] },
+    { key: 'NOT_EQUALS', value: 'NOT EQUALS', type: ['STRING', 'NUMBER'] },
+    { key: 'GREATER_THAN', value: 'GREATER THAN', type: ['NUMBER'] },
+    { key: 'LESS_THAN', value: 'LESS THAN', type: ['NUMBER'] },
+    { key: 'STARTS_WITH', value: 'STARTS WITH', type: ['STRING'] },
+    { key: 'CONTAINS', value: 'CONTAINS', type: ['STRING'] },
+    { key: 'NOT_CONTAINS', value: 'DOES NOT CONTAIN', type: ['STRING'] },
+    {
+      key: 'GREATER_THAN_EQUAL',
+      value: 'GREATER THAN OR EQUAL',
+      type: ['NUMBER'],
+    },
+    { key: 'LESS_THAN_EQUAL', value: 'LESS THAN OR EQUAL', type: ['NUMBER'] },
+    { key: 'DATE_GT', value: 'DATE GREATER THAN', type: ['DATE'] },
+    { key: 'DATE_LT', value: 'DATE LESS THAN', type: ['DATE'] },
+    { key: 'DATE_EQUAL', value: 'DATE EQUAL', type: ['DATE'] },
+    { key: 'MVEL', value: 'MVEL', type: ['STRING'] },
+  ];
   constructor(private formBuilder: FormBuilder) {}
   addRow(type: any): void {
     if (type === 0) {

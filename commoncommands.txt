@@ -5,3 +5,8 @@
 0) To Create new Component in Lb/Project:  nx g @nx/angular:component rule-builder --project=rule-builder
 0) To Start Dependancy Graph UI: npx nx graph
 0) To Start a Project in a port:  nx serve admin --port 4200
+
+
+
+
+https://nx.dev/angular-tutorial/1-code-generation?utm_source=nx-project
