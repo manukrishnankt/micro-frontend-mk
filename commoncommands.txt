@@ -3,3 +3,5 @@
 0) To Create New Library in NX Workspace: nx g @nx/angular:lib rule_builder
 0) To Add Material in Lib/ Project: npx nx g @angular/material:ng-add --project=rule-builder
 0) To Create new Component in Lb/Project:  nx g @nx/angular:component rule-builder --project=rule-builder
+0) To Start Dependancy Graph UI: npx nx graph
+0) To Start a Project in a port:  nx serve admin --port 4200
