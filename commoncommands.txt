@@ -1,0 +1,5 @@
+0) To List Projects in Nx:  nx show projects
+0) To Install Material in NX Workspace: npm i @angular/material
+0) To Create New Library in NX Workspace: nx g @nx/angular:lib rule_builder
+0) To Add Material in Lib/ Project: npx nx g @angular/material:ng-add --project=rule-builder
+0) To Create new Component in Lb/Project:  nx g @nx/angular:component rule-builder --project=rule-builder
