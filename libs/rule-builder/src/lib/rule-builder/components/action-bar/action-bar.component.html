@@ -1,0 +1,54 @@
+<form [formGroup]="ruleForm">
+  <div class="treeview__level" data-level="">
+    <span class="level-title"
+      ><div class="can-toggle">
+        <mat-button-toggle-group
+          name="fontStyle"
+          class="rule-toggle"
+          formControlName="condition"
+          aria-label="Font Style"
+        >
+          <mat-button-toggle value="AND" class="border-radious-left"
+            >AND</mat-button-toggle
+          >
+          <mat-button-toggle value="OR" class="border-radious-right"
+            >OR</mat-button-toggle
+          >
+        </mat-button-toggle-group>
+      </div></span
+    >
+    <div class="tree-add-icon">
+      <span
+        class="icon-super-admin-pluse"
+        #menuTrigger="matMenuTrigger"
+        [matMenuTriggerFor]="menu1"
+      ></span>
+    </div>
+    <div class="tree-add-icon" *ngIf="deleteYn">
+      <a (click)="removeRow()" class="close-input" title="Delete Rule">
+        <span class="icon-modal-close"></span>
+      </a>
+    </div>
+
+    <mat-menu #menu1="matMenu" class="rule-cal">
+      <ul class="mat-menu">
+        <li (click)="addGroup()">Add Group</li>
+        <li (click)="addCondition()">Add Condition</li>
+      </ul>
+    </mat-menu>
+    <div>
+      <a (click)="removeRow()" class="close-input" title="Delete Rule">
+        <div class="query-delete">
+          <span class="icon-delete"></span>
+        </div>
+      </a>
+    </div>
+    <div *ngIf="deleteYn">
+      <a (click)="removeRow()" class="close-input" title="Delete Rule">
+        <div class="query-delete">
+          <span class="icon-delete"></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</form>

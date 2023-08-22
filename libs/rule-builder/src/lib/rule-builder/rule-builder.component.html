@@ -1,0 +1,84 @@
+<div
+  class="add-wizrd-top-grid m-t-20"
+  style="display: block; padding-right: 25px"
+>
+  <form [formGroup]="ruleForm">
+    <div class="row">
+      <div class="col-md-4 form-group" style="padding-left: 9px">
+        <label>Rule Name</label>
+        <input
+          [(ngModel)]="ruleObject.ruleName"
+          type="text"
+          [ngModelOptions]="{ standalone: true }"
+          class="form-control"
+          placeholder="Enter Rule Name"
+        />
+        <div *ngIf="isSubmitted && !ruleObject.ruleName" class="mandatory-txt">
+          Rule Name is required
+        </div>
+      </div>
+      <div class="col-md-8 form-group">
+        <label>Rule Description</label>
+        <input
+          #ruleDescription="ngModel"
+          [(ngModel)]="ruleObject.ruleDescription"
+          type="text"
+          [ngModelOptions]="{ standalone: true }"
+          class="form-control"
+          placeholder="Enter Rule Description"
+        />
+        <div
+          *ngIf="isSubmitted && !ruleObject.ruleDescription"
+          class="mandatory-txt"
+        >
+          Rule Description is required
+        </div>
+        <div
+          *ngIf="
+            isSubmitted &&
+            ruleDescription.value?.length > 500 &&
+            ruleDescription.touched
+          "
+          class="mandatory-txt"
+        >
+          Maximum character limit of rule Description should be 500
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="treeview js-treeview">
+        <ul>
+          <li class="treeview-top-padding">
+            <mk-workspace-action-bar
+              [ruleForm]="ruleForm"
+              (addRow)="addRow($event)"
+            ></mk-workspace-action-bar>
+            <ul>
+              <li
+                formArrayName="rules"
+                *ngFor="let a of ruleArray['controls']; let i = index"
+              >
+                <div class="treeview__level">
+                  <div [formGroupName]="i" class="search-outer-box">
+                    <mk-workspace-group
+                      [isWizardRule]="true"
+                      (deleteGroup)="removeRow(i)"
+                      [isSubmitted]="isSubmitted"
+                      style="width: 100%"
+                      [operatorList]="operatorList"
+                      [lookupList]="lookupList"
+                      [categoryList]="categoryList"
+                      [rule]="a"
+                      [gLength]="ruleArray['controls'].length"
+                    >
+                    </mk-workspace-group>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </form>
+</div>
