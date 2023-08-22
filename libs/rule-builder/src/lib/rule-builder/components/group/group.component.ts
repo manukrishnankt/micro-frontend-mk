@@ -11,6 +11,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'mk-workspace-group',
@@ -163,7 +164,7 @@ export class GroupComponent implements OnInit {
     }
   }
   onSelectEvent(lookUpCatCode: string) {
-    let list = this.lookupList
+    const list = this.lookupList
       .filter((ite) => {
         return ite.lookUpCatCode === lookUpCatCode;
       })

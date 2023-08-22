@@ -33,7 +33,7 @@
   </div>
   <div *ngIf="!rule.get('condition')" class="tree-serch-row-1">
     <div class="form-group dropdown-dev">
-      <mat-form-field appearance="outline" floatLabel="never">
+      <mat-form-field appearance="outline" floatLabel="auto">
         <mat-select
           panelClass="drop-down-panelcls"
           formControlName="fieldName"
@@ -71,7 +71,7 @@
       </div>
     </div>
     <div *ngIf="rule.value.fieldName" class="form-group dropdown-dev">
-      <mat-form-field appearance="outline" floatLabel="never">
+      <mat-form-field appearance="outline" floatLabel="auto">
         <mat-select
           panelClass="drop-down-panelcls"
           formControlName="operator"
@@ -109,7 +109,7 @@
       </div>
     </div>
     <div *ngIf="rule.value.fieldName" class="form-group dropdown-dev">
-      <mat-form-field appearance="outline" floatLabel="never">
+      <mat-form-field appearance="outline" floatLabel="auto">
         <mat-select
           panelClass="drop-down-panelcls"
           formControlName="fieldDataTypeUI"
@@ -273,13 +273,12 @@
       "
       class="form-group dropdown-dev"
     >
-      <mat-form-field appearance="outline" floatLabel="never">
+      <mat-form-field appearance="outline" floatLabel="auto">
         <mat-select
           panelClass="drop-down-panelcls"
           formControlName="fieldLookupCodeUI"
           placeholder="Select lookup"
           [(value)]="selectedLookupValue"
-          (selectionChange)="onSelectionChange()"
         >
           <mat-option
             *ngFor="let type of lookupList"
@@ -304,7 +303,7 @@
       "
       class="form-group dropdown-dev"
     >
-      <mat-form-field appearance="outline" floatLabel="never">
+      <mat-form-field appearance="outline" floatLabel="auto">
         <mat-select
           panelClass="drop-down-panelcls"
           formControlName="fieldValue"
