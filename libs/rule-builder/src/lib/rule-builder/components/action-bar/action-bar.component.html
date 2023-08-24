@@ -32,10 +32,8 @@
     </div>
 
     <mat-menu #menu1="matMenu" class="rule-cal">
-      <ul class="mat-menu">
-        <li (click)="addGroup()">Add Group</li>
-        <li (click)="addCondition()">Add Condition</li>
-      </ul>
+      <button mat-menu-item (click)="addGroup()">Add Group</button>
+      <button mat-menu-item (click)="addCondition()">Add Condition</button>
     </mat-menu>
     <div>
       <a (click)="removeRow()" class="close-input" title="Delete Rule">
