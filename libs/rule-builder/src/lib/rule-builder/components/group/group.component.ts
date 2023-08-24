@@ -26,7 +26,12 @@ export class GroupComponent implements OnInit {
   @Input() lookupList!: any[];
   @Input() isSubmitted!: boolean;
   @Input() arrayLength: boolean = false;
+  @Input() isWizardRule: boolean = false;
+  @Input() parentType!: string;
+
   @Output() deleteGroup: EventEmitter<number> = new EventEmitter<number>();
+
+  @ViewChild('fieldValue', { static: false })
   queryCondition = 'AND';
   ruleArray!: FormArray;
   valueList: any[] = [];
@@ -36,15 +41,12 @@ export class GroupComponent implements OnInit {
   lookupValueListArray: any[] = [];
   ruleFieldListArray: any[] = [];
   rulePreValueListArray: any[] = [];
-  @Input() isWizardRule: boolean = false;
-  @Input() parentType!: string;
   dialogRef: any;
   concatValue: string = '';
   showMenu: boolean = false;
   concatValueNew: string = '';
   myTextBox!: HTMLInputElement;
   currentCursorPosition: any;
-  @ViewChild('fieldValue', { static: false })
   fieldValue!: ElementRef<HTMLTextAreaElement>;
   cursorPosition: any;
   caretPos: any;
