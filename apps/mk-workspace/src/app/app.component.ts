@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,4 +8,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'NX Workspace';
+  categoryList: any[] = [
+    { fieldName: 'firstName', fieldLabel: 'First Name', fieldType: 'STRING' },
+  ];
+  lookupList: any[] = [{ lookUpCatCode: '1Code', categoryText: 'Look Up 1' }];
 }

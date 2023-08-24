@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -11,7 +11,8 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class RuleBuilderComponent {
   ruleArray!: FormArray;
   ruleForm!: FormGroup;
-  categoryList: any[] = [];
+  @Input() categoryList: any[] = [];
+  @Input() lookupList: any[] = [];
   constructor(private formBuilder: FormBuilder) {
     this.ruleForm = this.createGroup();
 

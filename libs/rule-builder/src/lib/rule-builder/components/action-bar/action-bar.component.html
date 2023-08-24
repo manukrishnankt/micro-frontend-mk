@@ -17,16 +17,15 @@
         </mat-button-toggle-group>
       </div></span
     >
-    <div class="tree-add-icon">
-      <span
-        class="icon-super-admin-pluse"
-        #menuTrigger="matMenuTrigger"
-        [matMenuTriggerFor]="menu1"
-        >ADD</span
-      >
+    <div
+      class="tree-add-icon"
+      #menuTrigger="matMenuTrigger"
+      [matMenuTriggerFor]="menu1"
+    >
+      <span class="icon-super-admin-pluse">ADD</span>
     </div>
-    <div class="tree-add-icon" *ngIf="deleteYn">
-      <a (click)="removeRow()" class="close-input" title="Delete Rule">
+    <div class="tree-add-icon" *ngIf="deleteYn" (click)="removeRow()">
+      <a class="close-input" title="Delete Rule">
         <span class="icon-modal-close">X</span>
       </a>
     </div>

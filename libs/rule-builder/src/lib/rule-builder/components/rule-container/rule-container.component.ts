@@ -16,12 +16,12 @@ export class RuleContainerComponent implements OnInit {
   @Input() wizardSteps: any[] = [];
   @Input() ruleJson: any;
   @Input() parentType: string = '';
+  @Input() lookupList: any[] = [];
   isSubmitted: boolean = false;
   ruleForm!: FormGroup;
   ruleObject: any = {};
   ruleArray!: FormArray;
   queryCondition = 'AND';
-  lookupList: any[] = [];
   operatorList: any[] = [
     { key: 'EQUALS', value: 'EQUALS', type: ['STRING', 'NUMBER'] },
     { key: 'NOT_EQUALS', value: 'NOT EQUALS', type: ['STRING', 'NUMBER'] },
