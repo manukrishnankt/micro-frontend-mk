@@ -154,6 +154,24 @@ export class RuleContainerComponent implements OnInit {
   }
   onGenerateRule() {
     if (this.ruleForm.valid) {
+      this.opObj = {
+        ruleName: '',
+        ruleDescription: '',
+        ruleJson: {
+          logicalOperators: [''],
+          expressionObjects: [
+            {
+              fieldName: '',
+              operator: '',
+              fieldValue: '',
+              fieldType: 'STRING',
+              fieldDataTypeUI: 'TEXT',
+              fieldLookupCodeUI: '',
+            },
+          ],
+          conditions: [this.criteriaObj],
+        },
+      };
       const sampleJson = this.ruleForm.getRawValue();
       if (this.opObj.ruleJson?.logicalOperators?.length === 1) {
         this.opObj.ruleJson.logicalOperators[0] = sampleJson.condition;
