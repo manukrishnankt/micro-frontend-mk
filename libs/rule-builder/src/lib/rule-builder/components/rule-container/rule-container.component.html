@@ -3,8 +3,8 @@
   style="display: block; padding-right: 25px"
 >
   <form [formGroup]="ruleForm">
-    <div class="row">
-      <div class="col-md-4 form-group" style="padding-left: 9px">
+    <div class="rule-header-wrapper">
+      <div class="rule-header-item" style="padding-left: 9px">
         <label>Rule Name</label>
         <input
           [(ngModel)]="ruleObject.ruleName"
@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="rule-header-body">
       <div class="treeview js-treeview">
         <ul>
           <li class="treeview-top-padding">

@@ -1,0 +1,26 @@
+.rule-header-wrapper {
+  float: left;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+  gap: 30px 15px;
+  grid-auto-rows: minmax(0px, auto);
+  margin-bottom: 15px;
+  height: 80px;
+  .rule-header-item {
+    display: block;
+    float: left;
+  }
+}
+.add-wizrd-top-grid.m-t-20 {
+  display: block;
+  padding-right: 25px;
+  float: left;
+  height: 100%;
+}
+.rule-header-body {
+  display: block;
+  float: left;
+  margin-left: 10px;
+  width: 100%;
+}

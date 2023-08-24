@@ -118,7 +118,7 @@ div#wzsl {
   /*padding-bottom: 15px;*/
 }
 .form-control {
-  height: 100%;
+  height: 60px;
   width: 100%;
   box-sizing: border-box;
   border-radius: 5px;
@@ -519,7 +519,7 @@ div#wzsl {
   justify-content: center;
   float: left;
   background: $light-gray;
-  border: 1px dotted $light-white-gray;
+  border: 1px dotted #808b9f;
 }
 .drag-file-area {
   width: 100%;
@@ -815,14 +815,14 @@ div#wzsl {
   position: absolute;
   top: -13px;
   left: -31px;
-  border-left: 1px dotted $secondary-greay;
+  border-left: 1px dotted #808b9f;
   width: 1px;
   height: 100%;
 }
 .treeview ul li:after {
   content: '';
   position: absolute;
-  border-top: 1px dotted $secondary-greay;
+  border-top: 1px dotted #808b9f;
   top: 37px;
   left: -30px;
   width: 29px;
