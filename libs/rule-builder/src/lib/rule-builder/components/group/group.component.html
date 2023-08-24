@@ -21,8 +21,6 @@
               [isSubmitted]="isSubmitted"
               [operatorList]="operatorList"
               [categoryList]="categoryList"
-              [parentType]="parentType"
-              [isWizardRule]="isWizardRule"
               [lookupList]="lookupList"
               (deleteGroup)="removeRow(i)"
             ></mk-workspace-group>
@@ -52,7 +50,6 @@
             >{{ category.fieldLabel }}</mat-option
           >
           <mat-option
-            *ngIf="isWizardRule || parentType === 'CALENDER'"
             [value]="'Expression'"
             matTooltip="'Expression'"
             [matTooltipPosition]="'above'"
@@ -86,10 +83,7 @@
             ></ng-container
           >
           <mat-option
-            *ngIf="
-              parentType === 'CALENDER' &&
-              rule.controls.fieldName?.value === 'Expression'
-            "
+            *ngIf="rule.controls.fieldName?.value === 'Expression'"
             [value]="'BETWEEN'"
             matTooltip="BETWEEN"
             [matTooltipPosition]="'above'"

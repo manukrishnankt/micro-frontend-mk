@@ -26,8 +26,6 @@ export class GroupComponent implements OnInit {
   @Input() lookupList!: any[];
   @Input() isSubmitted!: boolean;
   @Input() arrayLength: boolean = false;
-  @Input() isWizardRule: boolean = false;
-  @Input() parentType!: string;
 
   @Output() deleteGroup: EventEmitter<number> = new EventEmitter<number>();
 

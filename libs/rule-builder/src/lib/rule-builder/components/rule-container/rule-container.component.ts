@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Criteria, RuleOutputObj } from '../../../shared/rule-op-obj';
 
 @Component({
   selector: 'mk-workspace-rule-container',
@@ -12,10 +13,8 @@ export class RuleContainerComponent implements OnInit {
   @Output() saveRule = new EventEmitter<any>();
   @Input() isAddRule!: boolean;
   @Input() categoryList: any[] = [];
-  @Input() isWizard: boolean = false;
   @Input() wizardSteps: any[] = [];
   @Input() ruleJson: any;
-  @Input() parentType: string = '';
   @Input() lookupList: any[] = [];
   isSubmitted: boolean = false;
   ruleForm!: FormGroup;
@@ -41,6 +40,44 @@ export class RuleContainerComponent implements OnInit {
     { key: 'DATE_EQUAL', value: 'DATE EQUAL', type: ['DATE'] },
     { key: 'MVEL', value: 'MVEL', type: ['STRING'] },
   ];
+
+  criteriaObj: Criteria = {
+    criteria: {
+      logicalOperators: [''],
+      expressionObjects: [
+        {
+          fieldName: '',
+          operator: '',
+          fieldValue: '',
+          fieldType: '',
+          fieldDataTypeUI: 'TEXT',
+          fieldLookupCodeUI: '',
+        },
+      ],
+    },
+  };
+
+  opObj: RuleOutputObj = {
+    ruleName: '',
+    ruleDescription: '',
+    ruleJson: {
+      logicalOperators: [''],
+      expressionObjects: [
+        {
+          fieldName: '',
+          operator: '',
+          fieldValue: '',
+          fieldType: 'STRING',
+          fieldDataTypeUI: 'TEXT',
+          fieldLookupCodeUI: '',
+        },
+      ],
+      conditions: [this.criteriaObj],
+    },
+  };
+
+  wizardStepsObj: any = { nodeTrueCond: '', nodeFalseCond: '' };
+
   constructor(private formBuilder: FormBuilder) {}
   ngOnInit(): void {
     this.ruleForm = this.createGroup();
@@ -114,5 +151,82 @@ export class RuleContainerComponent implements OnInit {
       condition: 'AND',
       rules: this.formBuilder.array([this.createRules()]),
     });
+  }
+  onGenerateRule() {
+    if (this.ruleForm.valid) {
+      const sampleJson = this.ruleForm.getRawValue();
+      if (this.opObj.ruleJson?.logicalOperators?.length === 1) {
+        this.opObj.ruleJson.logicalOperators[0] = sampleJson.condition;
+      } else {
+        this.opObj.ruleJson?.logicalOperators?.push(sampleJson.condition);
+      }
+      sampleJson.rules.forEach((element: any) => {
+        this.returnRecursive(element, this.opObj.ruleJson);
+      });
+
+      this.ruleForm.reset();
+      this.saveRule.emit({
+        ruleJson: this.opObj,
+        wizardObj: this.wizardStepsObj,
+      });
+    }
+    return this.opObj;
+  }
+  returnRecursive(element: any, criteria: any) {
+    if (element['condition']) {
+      this.criteriaObj = {
+        criteria: {
+          logicalOperators: [''],
+          expressionObjects: [
+            {
+              fieldName: '',
+              operator: '',
+              fieldValue: '',
+              fieldType: 'STRING',
+              fieldDataTypeUI: 'TEXT',
+              fieldLookupCodeUI: '',
+            },
+          ],
+        },
+      };
+      if (this.criteriaObj.criteria?.logicalOperators?.length === 1) {
+        this.criteriaObj.criteria.logicalOperators[0] = element.condition;
+      } else {
+        this.criteriaObj.criteria?.logicalOperators?.push(element.condition);
+      }
+      if (criteria['conditions']) {
+        criteria.conditions[0] = this.criteriaObj;
+      } else {
+        criteria['conditions'] = [];
+        criteria.conditions[0] = this.criteriaObj;
+      }
+
+      element.rules.forEach((element2: any) => {
+        this.returnRecursive(element2, criteria?.conditions[0].criteria);
+      });
+    } else {
+      if (
+        criteria?.expressionObjects.length === 1 &&
+        criteria?.expressionObjects[0].fieldName === ''
+      ) {
+        criteria.expressionObjects[0].fieldName =
+          element.fieldDataTypeUI == 'LOOKUP'
+            ? element.fieldName + 'key'
+            : element.fieldName;
+        criteria.expressionObjects[0].fieldType = element.fieldType;
+        criteria.expressionObjects[0].fieldValue = element.fieldValue;
+        criteria.expressionObjects[0].operator = element.operator;
+        criteria.expressionObjects[0].fieldDataTypeUI = element.fieldDataTypeUI;
+        criteria.expressionObjects[0].fieldLookupCodeUI =
+          element.fieldLookupCodeUI;
+      } else {
+        element.fieldName =
+          element.fieldDataTypeUI == 'LOOKUP'
+            ? element.fieldName + 'key'
+            : element.fieldName;
+        criteria?.expressionObjects?.push(element);
+      }
+    }
+    return criteria;
   }
 }
