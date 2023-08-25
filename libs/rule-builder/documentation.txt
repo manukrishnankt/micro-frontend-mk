@@ -1,0 +1,13 @@
+
+AppComponent.ts
+
+categoryList: any[] = [{ fieldName: 'firstName', fieldLabel: 'First Name', fieldType: 'STRING' }];
+lookupList: any[] = [{ lookUpCatCode: '1Code', categoryText: 'Look Up 1' }];
+
+AppComponent.HTML
+
+ <mk-workspace-rule-builder
+  [categoryList]="categoryList"
+  [lookupList]="lookupList"
+  [ruleShowYN]="true"
+></mk-workspace-rule-builder> 
