@@ -75,7 +75,6 @@ export class RuleContainerComponent implements OnInit {
       conditions: [this.criteriaObj],
     },
   };
-
   wizardStepsObj: any = { nodeTrueCond: '', nodeFalseCond: '' };
 
   constructor(private formBuilder: FormBuilder) {}

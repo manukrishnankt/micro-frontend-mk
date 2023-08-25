@@ -1,7 +1,9 @@
 <mk-workspace-rule-container
+  #container
   [isAddRule]="true"
   [categoryList]="categoryList"
   [lookupList]="lookupList"
   [wizardSteps]="[]"
   [ruleJson]="ruleArray"
 ></mk-workspace-rule-container>
+<div *ngIf="ruleShowYN">{{ container?.ruleForm?.getRawValue() | json }}</div>

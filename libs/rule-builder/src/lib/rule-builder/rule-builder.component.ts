@@ -13,6 +13,7 @@ export class RuleBuilderComponent {
   ruleForm!: FormGroup;
   @Input() categoryList: any[] = [];
   @Input() lookupList: any[] = [];
+  @Input() ruleShowYN: boolean = false;
   constructor(private formBuilder: FormBuilder) {
     this.ruleForm = this.createGroup();
 
