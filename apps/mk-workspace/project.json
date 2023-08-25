@@ -19,8 +19,15 @@
           "apps/mk-workspace/src/favicon.ico",
           "apps/mk-workspace/src/assets"
         ],
-        "styles": ["apps/mk-workspace/src/styles.scss", "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"],
-        "scripts": []
+        "styles": [ 
+          "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+          "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+          "apps/mk-workspace/src/styles.scss"
+        ],
+        "scripts": [
+          "./node_modules/jquery/dist/jquery.min.js",
+          "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+        ]
       },
       "configurations": {
         "production": {

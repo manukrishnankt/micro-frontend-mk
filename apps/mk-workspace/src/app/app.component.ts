@@ -19,4 +19,9 @@ export class AppComponent {
     ['text_color', 'background_color'],
     ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
+  editorBody = '';
+
+  constructor() {
+    this.editorBody = '{"name":"John","age":30,"city":"New York"}';
+  }
 }

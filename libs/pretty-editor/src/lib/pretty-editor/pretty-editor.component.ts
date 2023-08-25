@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Editor, Toolbar } from 'ngx-editor';
+import { TransformPipe } from '../shared/transform-pipe';
 
 @Component({
   selector: 'mk-workspace-pretty-editor',
@@ -14,6 +15,7 @@ export class PrettyEditorComponent implements OnInit, OnDestroy {
   @Input() disabledYN = false;
   @Input() toolbar: Toolbar = [];
   @Input() historySupportedYN: boolean = true;
+  @Input() type: string = '';
 
   ngOnInit(): void {
     this.editor = new Editor({ history: this.historySupportedYN });
@@ -29,6 +31,10 @@ export class PrettyEditorComponent implements OnInit, OnDestroy {
         ['align_left', 'align_center', 'align_right', 'align_justify'],
       ];
     }
+    this.editorBody = `<pre>${new TransformPipe().transform(
+      this.editorBody,
+      this.type
+    )}</pre>`;
   }
 
   ngOnDestroy(): void {
