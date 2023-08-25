@@ -1,3 +1,7 @@
+AppModule.ts
+
+Import RuleBuilderModule 
+import { RuleBuilderModule } from '@mk-workspace/rule-builder';
 
 AppComponent.ts
 

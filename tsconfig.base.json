@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@mk-workspace/pretty-editor": ["libs/pretty-editor/src/index.ts"],
       "@mk-workspace/rule-builder": ["libs/rule-builder/src/index.ts"]
     }
   },

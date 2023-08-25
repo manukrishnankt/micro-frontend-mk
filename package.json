@@ -16,8 +16,12 @@
     "@angular/platform-browser-dynamic": "~16.2.0",
     "@angular/router": "~16.2.0",
     "@nx/angular": "16.7.2",
+    "bootstrap": "^5.3.1",
+    "jquery": "^3.7.0",
+    "ngx-editor": "^16.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "vkbeautify": "^0.99.3",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
@@ -40,6 +44,7 @@
     "@schematics/angular": "~16.2.0",
     "@types/jest": "^29.4.0",
     "@types/node": "16.11.7",
+    "@types/vkbeautify": "^0.99.2",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
     "cypress": "^12.16.0",
