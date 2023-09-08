@@ -1,24 +1,24 @@
 export interface FlowchartObj {
   class?: string;
-  nodeDataArray?: Array<nodeData>;
-  linkDataArray?: Array<linkData>;
+  nodeDataArray?: Array<NodeData>;
+  linkDataArray?: Array<LinkData>;
 }
-export interface nodeData {
+export interface NodeData {
   category?: string;
   uuid?: string;
   text?: string;
-  type?: flowNodeType;
+  type?: FlowNodeType;
   key?: number;
   loc?: string;
   figure?: string;
 }
-export interface linkData {
+export interface LinkData {
   from?: number;
   to?: number;
   text?: string;
   visible?: boolean;
 }
-export enum flowNodeType {
+export enum FlowNodeType {
   rule = 'rule',
   step = 'step',
   start = 'start',
