@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { WorkflowBuilderComponent } from '@mk-workspace/workflow-builder';
 
 @Component({
   selector: 'mk-workspace-root',
@@ -7,6 +8,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  @ViewChild('workflowBuilder') workflowBuilder!: WorkflowBuilderComponent;
   stepList: any[] = [];
   ruleList: any[] = [];
   constructor() {
@@ -50,5 +52,9 @@ export class AppComponent {
         uniqueId: '333',
       },
     ];
+  }
+  onClick() {
+    const data = this.workflowBuilder.toJson();
+    console.log(data);
   }
 }

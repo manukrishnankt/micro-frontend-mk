@@ -298,10 +298,9 @@ function makeSVG() {
   }
 }
 function toJson() {
-  //console.log(myDiagram.model.toJson());
-  document.getElementById("outputJson").value = myDiagram.model.toJson();
-  //  returnobj = myDiagram.model.toJson();
-  // return returnobj;
+  const jsonValue = myDiagram.model.toJson();
+  // document.getElementById("outputJson").value = jsonValue;
+  return jsonValue;
 }
 $(function () {
   $("#sample").trigger("onload");

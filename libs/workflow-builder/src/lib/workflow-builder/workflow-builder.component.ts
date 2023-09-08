@@ -60,4 +60,8 @@ export class WorkflowBuilderComponent implements OnChanges {
     });
     new init(flowObj, rulesUpdatedList);
   }
+  toJson(): string {
+    const data = toJson.apply();
+    return JSON.parse(data);
+  }
 }
