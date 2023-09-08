@@ -4,6 +4,8 @@ import {
   Component,
   ElementRef,
   Input,
+  OnChanges,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { FlowchartObj } from '../utils/flowchart-obj';
@@ -15,17 +17,47 @@ declare var toJson: any;
   templateUrl: './workflow-builder.component.html',
   styleUrls: ['./workflow-builder.component.scss'],
 })
-export class WorkflowBuilderComponent implements AfterViewInit {
+export class WorkflowBuilderComponent implements OnChanges {
   @ViewChild('divContent') divContent!: ElementRef;
 
-  @Input() ruleStepList: any[] = [];
+  @Input() stepList: any[] = [];
+  @Input() ruleList: any[] = [];
 
-  ngAfterViewInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     const flowObj: FlowchartObj = {
       linkDataArray: [],
       nodeDataArray: [],
       class: 'go.GraphLinksModel',
     };
-    new init(flowObj, this.ruleStepList);
+    const rulesUpdatedList: any[] = [
+      {
+        category: 'Start',
+        text: 'Start',
+        type: 'start',
+        uuid: '10000',
+      },
+    ];
+    this.stepList.forEach((element: any) => {
+      rulesUpdatedList.push({
+        text: element.displayLoabel,
+        uuid: 'STEP_' + element.uniqueId,
+        type: 'step',
+      });
+    });
+    this.ruleList.forEach((element: any) => {
+      rulesUpdatedList.push({
+        text: element.displayLoabel,
+        uuid: 'RULE_' + element.uniqueId,
+        type: 'rule',
+        figure: 'Diamond',
+      });
+    });
+    rulesUpdatedList.push({
+      category: 'End',
+      text: 'End',
+      type: 'stop',
+      uuid: '999999',
+    });
+    new init(flowObj, rulesUpdatedList);
   }
 }

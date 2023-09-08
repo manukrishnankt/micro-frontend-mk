@@ -7,20 +7,47 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  ruleStepList: any[] = [];
+  stepList: any[] = [];
+  ruleList: any[] = [];
   constructor() {
-    this.ruleStepList = [
+    this.stepList = [
       {
-        category: 'Start',
-        text: 'Start',
-        type: 'start',
-        uuid: '10000',
+        displayLoabel: 'Step 1',
+        uniqueId: '123',
       },
       {
-        category: 'End',
-        text: 'End',
-        type: 'stop',
-        uuid: '999999',
+        displayLoabel: 'Step 2',
+        uniqueId: '1232',
+      },
+      {
+        displayLoabel: 'Step 3',
+        uniqueId: '1233',
+      },
+      {
+        displayLoabel: 'Step 4',
+        uniqueId: '1234',
+      },
+      {
+        displayLoabel: 'Step 5',
+        uniqueId: '122',
+      },
+      {
+        displayLoabel: 'Step 7',
+        uniqueId: '231',
+      },
+    ];
+    this.ruleList = [
+      {
+        displayLoabel: 'Rule 1',
+        uniqueId: '123',
+      },
+      {
+        displayLoabel: 'Rule 2',
+        uniqueId: '122',
+      },
+      {
+        displayLoabel: 'Rule 3',
+        uniqueId: '333',
       },
     ];
   }
