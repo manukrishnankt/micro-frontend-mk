@@ -1,0 +1,18 @@
+.workflow-parent {
+  display: flex;
+  border: 1px solid #000;
+  height: 75vh;
+  width: 100%;
+}
+
+.wf-rule-steplist {
+  flex-grow: 1;
+  border: 1px solid red;
+  resize: horizontal;
+  overflow: auto;
+}
+
+.wf-canvas-wrapper {
+  flex-grow: 3;
+  border: 1px solid red;
+}

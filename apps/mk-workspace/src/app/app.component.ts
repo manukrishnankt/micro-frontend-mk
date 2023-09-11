@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component } from '@angular/core';
-import { Toolbar } from 'ngx-editor';
+import { Component, ViewChild } from '@angular/core';
+import { WorkflowBuilderComponent } from '@mk-workspace/workflow-builder';
 
 @Component({
   selector: 'mk-workspace-root',
@@ -8,20 +8,53 @@ import { Toolbar } from 'ngx-editor';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'NX Workspace';
-  toolbar: Toolbar = [
-    ['bold', 'italic'],
-    ['underline', 'strike'],
-    ['code', 'blockquote'],
-    ['ordered_list', 'bullet_list'],
-    [{ heading: ['h1', 'h2', 'h3'] }],
-    ['link', 'image'],
-    ['text_color', 'background_color'],
-    ['align_left', 'align_center', 'align_right', 'align_justify'],
-  ];
-  editorBody = '';
-
+  @ViewChild('workflowBuilder') workflowBuilder!: WorkflowBuilderComponent;
+  stepList: any[] = [];
+  ruleList: any[] = [];
   constructor() {
-    this.editorBody = '{"name":"John","age":30,"city":"New York"}';
+    this.stepList = [
+      {
+        displayLoabel: 'Step 1',
+        uniqueId: '123',
+      },
+      {
+        displayLoabel: 'Step 2',
+        uniqueId: '1232',
+      },
+      {
+        displayLoabel: 'Step 3',
+        uniqueId: '1233',
+      },
+      {
+        displayLoabel: 'Step 4',
+        uniqueId: '1234',
+      },
+      {
+        displayLoabel: 'Step 5',
+        uniqueId: '122',
+      },
+      {
+        displayLoabel: 'Step 7',
+        uniqueId: '231',
+      },
+    ];
+    this.ruleList = [
+      {
+        displayLoabel: 'Rule 1',
+        uniqueId: '123',
+      },
+      {
+        displayLoabel: 'Rule 2',
+        uniqueId: '122',
+      },
+      {
+        displayLoabel: 'Rule 3',
+        uniqueId: '333',
+      },
+    ];
+  }
+  onClick() {
+    const data = this.workflowBuilder.toJson();
+    console.log(data);
   }
 }

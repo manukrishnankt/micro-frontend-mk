@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
 import { NxWelcomeComponent } from './nx-welcome.component';
-import { PrettyEditorModule } from '@mk-workspace/pretty-editor';
+import { WorkflowBuilderModule } from '@mk-workspace/workflow-builder';
 
 @NgModule({
   declarations: [AppComponent, NxWelcomeComponent],
@@ -13,7 +13,7 @@ import { PrettyEditorModule } from '@mk-workspace/pretty-editor';
     BrowserModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
     BrowserAnimationsModule,
-    PrettyEditorModule,
+    WorkflowBuilderModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
