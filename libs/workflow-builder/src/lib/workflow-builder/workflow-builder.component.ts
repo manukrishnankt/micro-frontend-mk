@@ -1,14 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import {
   FlowNodeType,
   FlowchartObj,
@@ -16,6 +8,7 @@ import {
   NodeData,
 } from '../utils/flowchart-obj';
 import { NodeType, WorkflowNode } from '../utils/workflow-node';
+import { OpMode } from '../utils/workflow-enums';
 declare let init: any;
 declare let toJson: any;
 
@@ -24,22 +17,18 @@ declare let toJson: any;
   templateUrl: './workflow-builder.component.html',
   styleUrls: ['./workflow-builder.component.scss'],
 })
-export class WorkflowBuilderComponent implements OnChanges {
+export class WorkflowBuilderComponent implements OnInit {
   @ViewChild('divContent') divContent!: ElementRef;
 
   @Input() stepList: any[] = [];
   @Input() ruleList: any[] = [];
   @Input() workFlow: any[] = [];
+  @Input() mode: string = OpMode.CREATE.toString();
 
-  ngOnChanges(changes: SimpleChanges): void {
-    const flowObj: FlowchartObj = {
-      linkDataArray: [],
-      nodeDataArray: [],
-      class: 'go.GraphLinksModel',
-    };
-    this.initalizePallete(flowObj);
-  }
-  initalizePallete(flowObj: any) {
+  private nodeCheckList: any = [];
+  private rulesArrayResp: any = [];
+
+  initalizePallete() {
     const rulesUpdatedList: any[] = [
       {
         category: 'Start',
@@ -69,7 +58,7 @@ export class WorkflowBuilderComponent implements OnChanges {
       type: 'stop',
       uuid: '999999',
     });
-    new init(flowObj, rulesUpdatedList);
+    return rulesUpdatedList;
   }
   toJson(): any {
     const data = toJson.apply();
@@ -243,7 +232,7 @@ export class WorkflowBuilderComponent implements OnChanges {
             }
           } else {
             if (!this.checkCheckList(nextNode)) {
-              const linkDataArray2: linkData = {
+              const linkDataArray2: LinkData = {
                 from: nextNode[0].nodeKey,
                 to: 0,
               };
@@ -296,8 +285,98 @@ export class WorkflowBuilderComponent implements OnChanges {
       }
     }
     setTimeout(() => {
+      /*
       this.origFlowObj = JSON.parse(JSON.stringify(flowObj));
       new init(flowObj, this.ruleStepList);
+      */
     }, 1000);
+  }
+  updateNodeCheckList(nodeId: any, traverseType: any) {
+    this.nodeCheckList.forEach((element: any) => {
+      if (element.id === nodeId) {
+        if (
+          element.type.toLowerCase() === 'step' ||
+          element.type.toLowerCase() === 'start' ||
+          element.type.toLowerCase() === 'stop'
+        ) {
+          element.nextTraversed = true;
+        } else {
+          if (traverseType === 'trueCond') {
+            element.trueTraversed = true;
+          } else {
+            element.falseTraversed = true;
+          }
+        }
+      }
+    });
+  }
+
+  loopThroughNodes(node: any, redType: any) {
+    if (node.wizWorkflowNodeType === 'step') {
+      const nextNode = this.getNextNodeDetails(node.wizWorkflowNextNodeID);
+      return nextNode;
+    } else if (node.wizWorkflowNodeType === 'rule') {
+      let trueNextNode;
+      if (redType === 'trueCond') {
+        trueNextNode = this.getNextNodeDetails(node.wizWorkflowTrueNextId);
+      } else {
+        trueNextNode = this.getNextNodeDetails(node.wizWorkflowFalseNextId);
+      }
+
+      return trueNextNode;
+    }
+  }
+
+  getNextNodeDetails(id: any) {
+    const nextNode = this.rulesArrayResp.filter(
+      (s: any) => s.wizWorkflowNodeId === id
+    );
+    return nextNode;
+  }
+  checkTravesing(flowObj: any) {
+    const filtered = this.rulesArrayResp.filter((obj: any) => {
+      const found = this.checkLinkPresent(obj, flowObj);
+      return !found && obj.wizWorkflowNodeType !== 'stop';
+    });
+    return filtered?.[0];
+  }
+  checkLinkPresent(nodeObj: any, flowObj: any) {
+    return (
+      flowObj.filter((obj: any) => {
+        return obj.from === nodeObj.nodeKey;
+      }).length > 0
+    );
+  }
+  ngOnInit(): void {
+    if (this.mode === OpMode.CREATE.toString()) {
+      const flowObj: FlowchartObj = {
+        linkDataArray: [],
+        nodeDataArray: [],
+        class: 'go.GraphLinksModel',
+      };
+      const rulesUpdatedList = this.initalizePallete();
+      new init(flowObj, rulesUpdatedList);
+    }
+  }
+  /**this checks the checklist to remove duplicate cheking */
+  checkCheckList(node: any) {
+    let found = false;
+    const findNode = this.nodeCheckList.filter(
+      (s: any) => s.id === node[0].wizWorkflowNodeId
+    );
+    if (findNode.length > 0) {
+      if (
+        (findNode[0].type.toLowerCase() === 'rule' &&
+          findNode[0].trueTraversed &&
+          findNode[0].falseTraversed) ||
+        ((findNode[0].type.toLowerCase() === 'step' ||
+          findNode[0].type.toLowerCase() === 'start' ||
+          findNode[0].type.toLowerCase() === 'stop') &&
+          findNode[0].nextTraversed)
+      ) {
+        found = true;
+      }
+    }
+    return found;
   }
 }
