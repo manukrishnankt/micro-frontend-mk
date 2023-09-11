@@ -24,9 +24,9 @@ export class WorkflowBuilderComponent implements OnInit {
   @Input() ruleList: any[] = [];
   @Input() workFlow: any[] = [];
   @Input() mode: string = OpMode.CREATE.toString();
+  @Input() data: any = [];
 
   private nodeCheckList: any = [];
-  private rulesArrayResp: any = [];
 
   initalizePallete() {
     const rulesUpdatedList: any[] = [
@@ -201,7 +201,7 @@ export class WorkflowBuilderComponent implements OnInit {
       flowObj.nodeDataArray?.push(flowNodeData);
     });
 
-    const startNode = this.rulesArrayResp.filter(
+    const startNode = this.data.filter(
       (s: any) => s.wizWorkflowNodeType === 'start'
     );
     if (startNode.length > 0) {
@@ -328,13 +328,11 @@ export class WorkflowBuilderComponent implements OnInit {
   }
 
   getNextNodeDetails(id: any) {
-    const nextNode = this.rulesArrayResp.filter(
-      (s: any) => s.wizWorkflowNodeId === id
-    );
+    const nextNode = this.data.filter((s: any) => s.wizWorkflowNodeId === id);
     return nextNode;
   }
   checkTravesing(flowObj: any) {
-    const filtered = this.rulesArrayResp.filter((obj: any) => {
+    const filtered = this.data.filter((obj: any) => {
       const found = this.checkLinkPresent(obj, flowObj);
       return !found && obj.wizWorkflowNodeType !== 'stop';
     });
