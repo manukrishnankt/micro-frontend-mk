@@ -1,4 +1,4 @@
-import { GlobalConstants } from 'src/app/global-constants';
+import { GlobalConstants } from '../../shared/global-constants';
 import { FieldObject } from '../field-object';
 
 export class TextBoxObject extends FieldObject<string> {
