@@ -17,7 +17,8 @@
     "paths": {
       "@mk-workspace/pretty-editor": ["libs/pretty-editor/src/index.ts"],
       "@mk-workspace/rule-builder": ["libs/rule-builder/src/index.ts"],
-      "@mk-workspace/workflow-builder": ["libs/workflow-builder/src/index.ts"]
+      "@mk-workspace/workflow-builder": ["libs/workflow-builder/src/index.ts"],
+      "@mk-workspace/workflow-wizard": ["libs/workflow-wizard/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
