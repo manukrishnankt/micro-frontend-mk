@@ -1,0 +1,39 @@
+<form [formGroup]="form" class="ul-list-class" *ngIf="showButtonsYN">
+  <ul>
+    <!-- <li class="custom01" *ngFor="let d of fieldObject.options; let i = index">
+      <input
+        type="radio"
+        [value]="d"
+        [name]="fieldObject.key"
+        [id]="i + '_' + fieldObject.key"
+        [formControlName]="fieldObject.key"
+        [ngClass]="{
+          'checked-class': formValues[fieldObject.key].pickupId === d.pickupId
+        }"
+        [checked]="formValues[fieldObject.key].pickupId === d.pickupId"
+      /><label [for]="i + '_' + fieldObject.key"> {{ d.value }}</label>
+    </li> -->
+    <mat-radio-group
+      [formControlName]="fieldObject.key"
+      [name]="fieldObject.key"
+    >
+      <li
+        *ngFor="let d of fieldObject.options; let i = index"
+        class="wizard-control"
+      >
+        <mat-radio-button
+          [checked]="formValues[fieldObject.key].key === d.key"
+          [value]="d"
+          class="wrapper-dynamic-radio"
+          [ngClass]="{
+            'checked-class': defaultValue === d.key
+          }"
+          appearance="standard"
+          [matTooltip]="d.value"
+        >
+          {{ d.value }}
+        </mat-radio-button>
+      </li>
+    </mat-radio-group>
+  </ul>
+</form>

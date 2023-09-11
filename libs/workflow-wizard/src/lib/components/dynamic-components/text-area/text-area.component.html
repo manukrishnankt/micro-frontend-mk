@@ -1,0 +1,17 @@
+<div [formGroup]="form">
+  <mat-form-field appearance="outline">
+    <mat-label>
+      {{
+        fieldObject.label
+          | languageTranslator : translatedProps : fieldObject.label
+      }}
+    </mat-label>
+
+    <textarea
+      matInput
+      [id]="fieldObject.key"
+      [formControlName]="fieldObject.key"
+    ></textarea>
+    <mat-hint>{{ fieldObject.hint }}</mat-hint>
+  </mat-form-field>
+</div>

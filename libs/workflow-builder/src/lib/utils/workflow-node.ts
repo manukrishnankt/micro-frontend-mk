@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface WorkflowNode {
   nodeType?: NodeType;
   nodeName?: string;
   nodeUuid?: string;
   nodeTrueCond?: string;
   nodeFalseCond?: string;
-  nodeDetails?: {};
+  nodeDetails?: any;
   nodeNext?: string;
   nodeLoc?: string;
   nodeKey?: string;

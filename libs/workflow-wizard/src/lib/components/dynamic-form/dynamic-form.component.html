@@ -1,0 +1,79 @@
+<div>
+  <div [ngSwitch]="fieldObject.controlType">
+    <div *ngSwitchCase="'TEXTBOX'">
+      <app-text-box
+        [fieldObject]="fieldObject"
+        [form]="form"
+        [translatedProps]="translatedProps"
+      ></app-text-box>
+    </div>
+    <div *ngSwitchCase="'DROPDOWN'">
+      <app-drop-down
+        [fieldObject]="fieldObject"
+        [form]="form"
+        [translatedProps]="translatedProps"
+        [wizardCommonLangProperties]="wizardCommonLangProperties"
+        (onApiEnabledFieldSelection)="onApiEnabledFieldSelection($event)"
+      ></app-drop-down>
+    </div>
+    <div *ngSwitchCase="'CHECKBOX'">
+      <app-check-box
+        [fieldObject]="fieldObject"
+        [form]="form"
+        [translatedProps]="translatedProps"
+      ></app-check-box>
+    </div>
+    <div *ngSwitchCase="'TEXTAREA'">
+      <app-text-area
+        [fieldObject]="fieldObject"
+        [form]="form"
+        [translatedProps]="translatedProps"
+      ></app-text-area>
+    </div>
+    <div *ngSwitchCase="'RADIO'">
+      <app-radio-button
+        [fieldObject]="fieldObject"
+        [form]="form"
+        [translatedProps]="translatedProps"
+      ></app-radio-button>
+    </div>
+    <div *ngSwitchCase="'LABEL'">
+      <app-label
+        [fieldObject]="fieldObject"
+        [form]="form"
+        [translatedProps]="translatedProps"
+      ></app-label>
+    </div>
+    <div *ngSwitchCase="'HIDDEN'">
+      <app-hidden-field
+        [fieldObject]="fieldObject"
+        [form]="form"
+      ></app-hidden-field>
+    </div>
+  </div>
+  <div class="errorMessage" *ngIf="formSubmitted">
+    <div
+      class="errorMessage-text"
+      *ngIf="this.form.controls[this.fieldObject.key].errors?.['pattern']"
+    >
+      {{
+        "Invalid" | languageTranslator : wizardCommonLangProperties : "Invalid"
+      }}
+      {{
+        fieldObject.label
+          | languageTranslator : translatedProps : fieldObject.label
+      }}
+    </div>
+    <div
+      class="errorMessage-text"
+      *ngIf="this.form.controls[this.fieldObject.key].errors?.['required']"
+    >
+      {{
+        "This is a required field"
+          | languageTranslator
+            : wizardCommonLangProperties
+            : "This is a required field"
+      }}
+    </div>
+  </div>
+</div>

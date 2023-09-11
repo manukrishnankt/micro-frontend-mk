@@ -1,0 +1,48 @@
+<div *ngIf="fieldObject.type === 'NORMAL'; else keyValueEle">
+  <div
+    class="contnent-block"
+    *ngIf="fieldObject.options?.length > 0; else lbStatic"
+  >
+    <p>
+      {{
+        fieldObject.label
+          | languageTranslator : translatedProps : fieldObject.label
+      }}
+    </p>
+    <span class="value-label" [matTooltip]="fieldObject.options[0].value">{{
+      fieldObject.options[0].value
+    }}</span>
+  </div>
+  <ng-template #lbStatic>
+    <p>
+      {{
+        fieldObject.label
+          | languageTranslator : translatedProps : fieldObject.label
+      }}
+    </p>
+  </ng-template>
+</div>
+<ng-template #keyValueEle>
+  <div
+    class="contnent-block"
+    *ngIf="fieldObject.options?.length > 0; else lbNonStatic"
+  >
+    <p>
+      {{
+        fieldObject.label
+          | languageTranslator : translatedProps : fieldObject.label
+      }}
+    </p>
+    <span class="value-label" [matTooltip]="fieldObject.options[0].value">{{
+      fieldObject.options[0].value
+    }}</span>
+  </div>
+  <ng-template #lbNonStatic>
+    <div class="contnent-block">
+      <p>{{ fieldObject.labelKey }}</p>
+      <span class="value-label" [matTooltip]="fieldObject.labelValue">{{
+        fieldObject.labelValue
+      }}</span>
+    </div>
+  </ng-template>
+</ng-template>

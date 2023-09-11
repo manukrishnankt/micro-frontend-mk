@@ -1,0 +1,35 @@
+<div class="col-md-12 padding-left-0 padding-right-0" [formGroup]="form">
+  <div class="form-group dropdown-dev">
+    <mat-form-field
+      appearance="outline"
+      floatLabel="always"
+      style="width: 100%"
+    >
+      <mat-label>
+        {{
+          fieldObject.label
+            | languageTranslator : translatedProps : fieldObject.label
+        }}
+      </mat-label>
+      <mat-select
+        panelClass="drop-down-panelcls"
+        [id]="fieldObject.key"
+        [formControlName]="fieldObject.key"
+        [compareWith]="compareFn"
+        (openedChange)="onChangeValueForAPICheck($event)"
+      >
+        <mat-option value="" disabled selected
+          >---
+          {{
+            'Select'
+              | languageTranslator : wizardCommonLangProperties : 'Select'
+          }}
+          ---</mat-option
+        >
+        <mat-option *ngFor="let opt of fieldObject.options" [value]="opt">
+          {{ opt.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>

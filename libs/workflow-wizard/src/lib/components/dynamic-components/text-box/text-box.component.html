@@ -1,0 +1,21 @@
+<div class="col-md-12 padding-left-0 padding-right-0" [formGroup]="form">
+  <div [ngClass]="{ 'text-box-height' : textboxHeight}" class="floating-label-group"  [matTooltip]=" fieldObject.label
+  | languageTranslator : translatedProps : fieldObject.label">
+  <input [ngClass]="{ 'text-box-height' : textboxHeight}"
+      [formControlName]="fieldObject.key"
+      [id]="fieldObject.key"
+      [type]="fieldObject.type"
+      class="form-control"
+      autocomplete="off"
+      [min]="getMinimumProps"
+      [max]="getMaximumProps"
+    />
+    <label class="floating-label">
+      {{
+        fieldObject.label
+          | languageTranslator : translatedProps : fieldObject.label
+      }}
+      <span class="mandatory" *ngIf="fieldObject.required">*</span>
+    </label>
+  </div>
+</div>

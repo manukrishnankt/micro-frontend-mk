@@ -353,7 +353,7 @@ export class WorkflowBuilderComponent implements OnInit {
         class: 'go.GraphLinksModel',
       };
       const rulesUpdatedList = this.initalizePallete();
-      new init(flowObj, rulesUpdatedList);
+      init(flowObj, rulesUpdatedList).apply();
     }
   }
   /**this checks the checklist to remove duplicate cheking */

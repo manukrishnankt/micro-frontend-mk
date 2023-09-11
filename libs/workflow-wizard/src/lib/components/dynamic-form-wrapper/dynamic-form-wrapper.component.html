@@ -1,0 +1,26 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
+  <div *ngFor="let fObjects of fieldObjects" class="form-row">
+    <app-dynamic-form
+      [fieldObject]="fObjects"
+      [form]="form"
+      [formSubmitted]="formSubmitted"
+      (onApiEnabledFieldSelEmit)="onApiEnabledFieldSelection($event, fObjects)"
+      [translatedProps]="translatedProps"
+      [wizardCommonLangProperties]="wizardCommonLangProperties"
+    ></app-dynamic-form>
+  </div>
+  <div class="form-row">
+    <button
+      type="submit"
+      [disabled]="!form.valid"
+      style="
+        padding: 5px;
+        border: 1px solid black;
+        border-radius: 3px;
+        display: none;
+      "
+    >
+      {{ stepDetails.primaryBtnLabel }}
+    </button>
+  </div>
+</form>

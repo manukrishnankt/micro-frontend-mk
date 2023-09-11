@@ -1,0 +1,14 @@
+
+// ::ng-deep .floating-label{
+
+ 
+//     max-width: 356px !important;
+//     overflow: hidden !important;
+//     max-height: 30px;
+//     text-overflow: ellipsis;
+//     white-space: nowrap;
+// }
+::ng-deep.text-box-height{
+    height: var(--height)!important;
+    padding-top:var(--padding)!important;
+}
